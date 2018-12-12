@@ -29,7 +29,7 @@ class DishDetail extends Component {
       return (
         <li>
           <p>{comment.comment}</p>
-          <p>-- {comment.author}</p>
+          <p>-- {comment.author}, {new Date(comment.date).toDateString()}</p>
         </li>
       );
     });
