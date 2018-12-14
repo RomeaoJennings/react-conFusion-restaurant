@@ -18,7 +18,7 @@ function RenderDish({ dish }) {
 
 function RenderComments({ comments }) {
    if (comments == null)
-      return (<div></div>);
+      return null;
 
    const commentsHTML = comments.map((comment) => {
       return (
@@ -42,7 +42,7 @@ function RenderComments({ comments }) {
 function DishDetail(props) {
    const dish = props.dish;
    if (dish == null)
-      return (<div></div>);
+      return null;
    else return (
       <div className="container">
          <div className="row">
