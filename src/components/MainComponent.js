@@ -5,6 +5,7 @@ import Menu from './MenuComponent';
 import Home from './HomeComponent';
 import Footer from './FooterComponent';
 import Contact from './ContactComponent';
+import DishDetail from './DishDetailComponent';
 import { DISHES } from '../shared/dishes';
 import { COMMENTS } from '../shared/comments';
 import { LEADERS } from '../shared/leaders';
@@ -40,12 +41,23 @@ class Main extends Component {
          ); 
       };
 
+      const DishWithID = ({match}) => {                      
+         const id = parseInt(match.params.dishId, 10);
+         const dish = this.state.dishes.filter((item) => item.id === id)[0];
+         const comments = this.state.comments.filter((item) => item.id === id);
+
+         return (
+            <DishDetail dish={dish} comments={comments}/>
+         );
+      }
+
       return (
          <>
             <Header/>
             <Switch>
                <Route path="/home" component={HomePage} />
                <Route exact path="/menu" component={() => <Menu dishes={this.state.dishes}/>}/>
+               <Route path="/menu/:dishId" component={DishWithID} />
                <Route exact path="/contactus" component={ Contact }/>
                <Redirect to="/home" />
             </Switch>
