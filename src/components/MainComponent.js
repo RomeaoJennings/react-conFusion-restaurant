@@ -36,20 +36,20 @@ class Main extends Component {
       const featDish = this.firstFeatured(this.props.dishes);
       const featPromo = this.firstFeatured(this.props.promotions);
       const featLeader = this.firstFeatured(this.props.leaders);
-
+      
       const HomePage = () => { 
          return ( 
             <Home  dish={featDish} promotion={featPromo} leader={featLeader} /> 
          ); 
       };
 
-      const DishWithID = ({match}) => {                      
+      const DishWithID = ({ match }) => {                      
          const id = parseInt(match.params.dishId, 10);
          const dish = this.props.dishes.filter((item) => item.id === id)[0];
-         const comments = this.props.comments.filter((item) => item.id === id);
-
+         const dishComments = this.props.comments.filter((item) => item.dishId === id);
+         
          return (
-            <DishDetail dish={dish} comments={comments}/>
+            <DishDetail dish={dish} comments={dishComments}/>
          );
       }
 

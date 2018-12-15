@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, CardImg, CardBody, CardTitle, CardText, Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import CommentForm from './CommentFormComponent';
 
 function RenderDish({ dish }) {
    return (
@@ -30,12 +31,15 @@ function RenderComments({ comments }) {
    });
 
    return (
-      <div className="col-12 col-md-5 m-1">
-         <h4>Comments</h4>
-         <ul className="list-unstyled">
-            {commentsHTML}
-         </ul>
-      </div>
+      <React.Fragment>
+         <div className="col-12 col-md-5 m-1">
+            <h4>Comments</h4>
+            <ul className="list-unstyled">
+               {commentsHTML}
+            </ul>
+            <CommentForm />
+         </div>
+      </React.Fragment>
    );
 }
 
@@ -52,14 +56,13 @@ function DishDetail(props) {
             </Breadcrumb>
             <div className="col-12">
                <h3>{dish.name}</h3>
-               <hr/>
+               <hr />
             </div>
          </div>
          <div className="row">
             <RenderDish dish={dish} />
             <RenderComments comments={props.comments} />
          </div>
-
       </div>
    );
 }
