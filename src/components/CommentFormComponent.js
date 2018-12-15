@@ -45,17 +45,17 @@ class CommentForm extends Component {
                      </Col>
                   </Row>
                   <Row className="form-group">
-                     <Label htmlFor="yourName" xs={12}>Your Name</Label>
+                     <Label htmlFor="author" xs={12}>Your Name</Label>
                      <Col xs={12}>
-                        <Control.text model=".yourName" id="yourName"
-                           name="yourName" className="form-control"
+                        <Control.text model=".author" id="author"
+                           name="author" className="form-control"
                            placeholder="Your Name"
                            validators={
                               { minLength: minLength(3), maxLength: maxLength(15) }
                            }
                         />
                         <Errors className="text-danger"
-                           model=".yourName"
+                           model=".author"
                            show="touched"
                            messages={{
                               minLength: 'Must be at least 3 characters',
