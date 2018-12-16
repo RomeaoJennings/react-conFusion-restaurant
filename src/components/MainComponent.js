@@ -9,20 +9,21 @@ import DishDetail from './DishDetailComponent';
 import About from './AboutComponent';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { addComment } from '../redux/ActionCreators';
+import { addComment, fetchDishes } from '../redux/ActionCreators';
 
 
 const mapStateToProps = (state) => {
    return {
       dishes: state.dishes,
-      comments: state.comments, 
+      comments: state.comments,
       promotions: state.promotions,
       leaders: state.leaders
    }
 }
 
 const mapDispatchtoProps = (dispatch) => ({
-   addComment: (dishId, rating, author, comment) => dispatch(addComment(dishId, rating, author, comment))
+   addComment: (dishId, rating, author, comment) => dispatch(addComment(dishId, rating, author, comment)),
+   fetchDishes: () => {dispatch(fetchDishes())}
 });
 
 class Main extends Component {
@@ -31,48 +32,57 @@ class Main extends Component {
       super(props);
    }
 
+   componentDidMount() {
+      this.props.fetchDishes();
+   }
+
    firstFeatured(items) {
       return items.filter((item) => item.featured)[0];
    }
 
 
    render() {
-      
-      const featDish = this.firstFeatured(this.props.dishes);
+
+      const featDish = this.firstFeatured(this.props.dishes.dishes);
       const featPromo = this.firstFeatured(this.props.promotions);
       const featLeader = this.firstFeatured(this.props.leaders);
-      
-      const HomePage = () => { 
-         return ( 
-            <Home  dish={featDish} promotion={featPromo} leader={featLeader} /> 
-         ); 
-      };
 
-      const DishWithID = ({ match }) => {                      
-         const id = parseInt(match.params.dishId, 10);
-         const dish = this.props.dishes.filter((item) => item.id === id)[0];
-         const dishComments = this.props.comments.filter((item) => item.dishId === id);
-         
+      const HomePage = () => {
          return (
-            <DishDetail dish={dish} 
-               comments={dishComments}
-               addComment={this.props.addComment}
+            <Home dish={featDish} 
+               promotion={featPromo} 
+               leader={featLeader} 
+               dishesLoading={this.props.dishes.isLoading} 
+               dishesErrMess={this.props.dishes.errMess}
             />
          );
+      };
+
+      const DishWithID = ({ match }) => {
+         const id = parseInt(match.params.dishId, 10);
+         const dish = this.props.dishes.dishes.filter((item) => item.id === id)[0];
+         const dishComments = this.props.comments.filter((item) => item.dishId === id);
+
+         return <DishDetail dish={dish} 
+            comments={dishComments} 
+            addComment={this.props.addComment}
+            isLoading={this.props.dishes.isLoading} 
+            errMess={this.props.dishes.errMess} 
+         />;
       }
 
       return (
          <>
-            <Header/>
+            <Header />
             <Switch>
                <Route path="/home" component={HomePage} />
-               <Route exact path="/menu" component={() => <Menu dishes={this.props.dishes}/>}/>
+               <Route exact path="/menu" component={() => <Menu dishes={this.props.dishes} />} />
                <Route path="/menu/:dishId" component={DishWithID} />
-               <Route exact path="/aboutus" component= {() => <About leaders={this.props.leaders}/>}/>
-               <Route exact path="/contactus" component={ Contact }/>
+               <Route exact path="/aboutus" component={() => <About leaders={this.props.leaders} />} />
+               <Route exact path="/contactus" component={Contact} />
                <Redirect to="/home" />
             </Switch>
-            <Footer/>
+            <Footer />
          </>
       );
    }
