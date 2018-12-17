@@ -5,6 +5,7 @@
   "dependencies": {
     "bootstrap": "^4.0.0",
     "bootstrap-social": "^5.1.1",
+    "cross-fetch": "^2.1.0",
     "font-awesome": "^4.7.0",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
@@ -36,5 +37,8 @@
   "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
   "main": "index.js",
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "json-server": "^0.14.0"
+  }
 }
