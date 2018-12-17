@@ -44,7 +44,7 @@ function RenderComments({ comments, dishId, postComment }) {
          <div className="col-12 col-md-5 m-1">
             <h4>Comments</h4>
             <ul className="list-unstyled">
-               <Stagger in>
+               <Stagger in delay="200">
                   {commentsHTML}
                </Stagger>
             </ul>
